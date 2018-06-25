@@ -15,6 +15,8 @@ public class UserAdapter {
 
     public static void configureRoutes(Gson gson) {
 
+        post("login", (request, response) -> service.loginUser(request, response));
+
         post("register", (request, response) -> service.registerUser(request, gson), gson::toJson);
 
     }

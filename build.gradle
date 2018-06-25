@@ -18,5 +18,5 @@ dependencies {
     compile "com.sparkjava:spark-debug-tools:0.5"
     compile "org.slf4j:slf4j-simple:1.7.13"
     compile "org.jdbi:jdbi:2.78"
-    compile 'mysql:mysql-connector-java:5.1.6'
+    compile 'mysql:mysql-connector-java:8.0.11'
 }
