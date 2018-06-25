@@ -31,18 +31,32 @@ public class UserRepository {
         return user;
     }
 
-    public User findByUsernameAndPassword(User user) {
+    public String checkCredentials(User user) {
         DBI dbi = new DBI("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = dbi.open();
 
-        User query = h.createQuery("SELECT id, username FROM `MUSIC_MARKET`.`USER` WHERE username=:username AND password=:password")
+        String query = h.createQuery("SELECT id FROM `MUSIC_MARKET`.`USER` WHERE username=:username AND password=:password")
                 .bind("username", user.getUsername())
                 .bind("password", user.getPassword())
-                .map(userMapper).first();
+                .mapTo(String.class).first();
 
         h.close();
 
         return query;
     }
+
+//    public User findUserByUsernameAndPassword(User user) {
+//        DBI dbi = new DBI("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+//        Handle h = dbi.open();
+//
+//        User query = h.createQuery("SELECT id, username FROM `MUSIC_MARKET`.`USER` WHERE username=:username AND password=:password")
+//                .bind("username", user.getUsername())
+//                .bind("password", user.getPassword())
+//                .map(userMapper).first();
+//
+//        h.close();
+//
+//        return query;
+//    }
 
 }

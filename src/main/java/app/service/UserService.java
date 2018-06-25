@@ -16,24 +16,22 @@ public class UserService {
         gson = new Gson();
     }
 
-    public User registerUser(Request request, Gson gson) {
+    public User registerUser(Request request, Response response) {
         User user = gson.fromJson(request.body(), User.class);
         return repository.createUser(user);
     }
 
-    public Response loginUser(Request request, Response response) {
-        User requestedUser = gson.fromJson(request.body(), User.class);
-        User foundUser = repository.findByUsernameAndPassword(requestedUser);
+    public String loginUser(Request request, Response response) {
+        String authenticatedId = repository.checkCredentials(gson.fromJson(request.body(), User.class));
 
-        if (foundUser.getId() != null) {
+        if (authenticatedId != null) {
             // generate token and set on header
-            response.body(gson.toJson(foundUser));
             response.header("Authorisation", "SUCCESS");
         }
         else {
             response.status(401);
         }
 
-        return response;
+        return "";
     }
 }

@@ -11,10 +11,6 @@ public class User {
         this.password = password;
     }
 
-    public User() {
-        this.id = null;
-    }
-
     public void setId(String id) {
         this.id = id;
     }

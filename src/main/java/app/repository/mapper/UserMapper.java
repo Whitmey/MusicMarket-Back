@@ -13,6 +13,7 @@ public class UserMapper implements ResultSetMapper<User> {
         String id = r.getString("USER.id");
         String username = r.getString("USER.username");
 
+
         return new User(id, username);
     }
 
