@@ -2,6 +2,7 @@ package app.service;
 
 import app.model.User;
 import app.repository.UserRepository;
+import app.util.TokenAuthentication;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
@@ -9,10 +10,12 @@ import spark.Response;
 public class UserService {
 
     private UserRepository repository;
+    private TokenAuthentication tokenAuthentication;
     private Gson gson;
 
     public UserService() {
         repository = new UserRepository();
+        tokenAuthentication = new TokenAuthentication();
         gson = new Gson();
     }
 
@@ -22,11 +25,10 @@ public class UserService {
     }
 
     public String loginUser(Request request, Response response) {
-        String authenticatedId = repository.checkCredentials(gson.fromJson(request.body(), User.class));
+        String userId = repository.checkCredentials(gson.fromJson(request.body(), User.class));
 
-        if (authenticatedId != null) {
-            // generate token and set on header
-            response.header("Authorisation", "SUCCESS");
+        if (userId != null) {
+            response.header("Authorisation", tokenAuthentication.generateToken());
         }
         else {
             response.status(401);
