@@ -30,7 +30,7 @@ public class DownloadCSV {
 
             InputStream is = entity.getContent();
 
-            String filePath = "c:\\demo\\file.zip";
+            String filePath = "/Users/willwhitmey/MusicMarket-Back/src/main/java/app/schedule/Songs.csv";
             FileOutputStream fos = new FileOutputStream(new File(filePath));
 
             int inByte;

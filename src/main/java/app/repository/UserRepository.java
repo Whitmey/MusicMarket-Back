@@ -2,8 +2,9 @@ package app.repository;
 
 import app.model.User;
 import app.repository.mapper.UserMapper;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
+
 import java.util.UUID;
 
 public class UserRepository {
@@ -15,8 +16,8 @@ public class UserRepository {
     }
 
     public User createUser(User user) {
-        DBI dbi = new DBI("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
-        Handle h = dbi.open();
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
 
         String uniqueID = UUID.randomUUID().toString();
         user.setId(uniqueID);
@@ -32,13 +33,13 @@ public class UserRepository {
     }
 
     public String checkCredentials(User user) {
-        DBI dbi = new DBI("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
-        Handle h = dbi.open();
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
 
         String query = h.createQuery("SELECT id FROM `MUSIC_MARKET`.`USER` WHERE username=:username AND password=:password")
                 .bind("username", user.getUsername())
                 .bind("password", user.getPassword())
-                .mapTo(String.class).first();
+                .mapTo(String.class).findOnly();
 
         h.close();
 
@@ -46,12 +47,12 @@ public class UserRepository {
     }
 
     public User findById(String userId) {
-        DBI dbi = new DBI("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
-        Handle h = dbi.open();
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
 
         User query = h.createQuery("SELECT id, username, balance FROM `MUSIC_MARKET`.`USER` WHERE id=:id")
                 .bind("id", userId)
-                .map(userMapper).first();
+                .map(userMapper).findOnly();
 
         h.close();
 
