@@ -45,18 +45,17 @@ public class UserRepository {
         return query;
     }
 
-//    public User findUserByUsernameAndPassword(User user) {
-//        DBI dbi = new DBI("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
-//        Handle h = dbi.open();
-//
-//        User query = h.createQuery("SELECT id, username FROM `MUSIC_MARKET`.`USER` WHERE username=:username AND password=:password")
-//                .bind("username", user.getUsername())
-//                .bind("password", user.getPassword())
-//                .map(userMapper).first();
-//
-//        h.close();
-//
-//        return query;
-//    }
+    public User findById(String userId) {
+        DBI dbi = new DBI("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = dbi.open();
+
+        User query = h.createQuery("SELECT id, username, balance FROM `MUSIC_MARKET`.`USER` WHERE id=:id")
+                .bind("id", userId)
+                .map(userMapper).first();
+
+        h.close();
+
+        return query;
+    }
 
 }

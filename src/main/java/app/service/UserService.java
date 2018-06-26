@@ -4,6 +4,7 @@ import app.model.User;
 import app.repository.UserRepository;
 import app.util.TokenAuthentication;
 import com.google.gson.Gson;
+import io.jsonwebtoken.Jwts;
 import spark.Request;
 import spark.Response;
 
@@ -28,7 +29,7 @@ public class UserService {
         String userId = repository.checkCredentials(gson.fromJson(request.body(), User.class));
 
         if (userId != null) {
-            response.header("Authorisation", tokenAuthentication.generateToken());
+            response.header("AuthKey", tokenAuthentication.generateToken(userId));
         }
         else {
             response.status(401);
@@ -36,4 +37,10 @@ public class UserService {
 
         return "";
     }
+
+    public User getUserAccount(Request request, Response response) {
+        String userId = tokenAuthentication.getUserId(request);
+        return repository.findById(userId);
+    }
+
 }

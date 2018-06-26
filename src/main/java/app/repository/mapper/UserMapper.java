@@ -12,9 +12,10 @@ public class UserMapper implements ResultSetMapper<User> {
     public User map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         String id = r.getString("USER.id");
         String username = r.getString("USER.username");
+        Double balance = r.getDouble("USER.balance");
 
 
-        return new User(id, username);
+        return new User(id, username, balance);
     }
 
 }

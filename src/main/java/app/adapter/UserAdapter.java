@@ -19,5 +19,7 @@ public class UserAdapter {
 
         post("register", (request, response) -> service.registerUser(request, response), gson::toJson);
 
+        get("account", (request, response) -> service.getUserAccount(request, response), gson::toJson);
+
     }
 }
