@@ -51,4 +51,20 @@ public class SongRepository {
         return songs;
     }
 
+    public List<Song> getSongByName(String name) {
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
+
+        List<Song> songs = h.createQuery("SELECT id, position, trackname, artist, streams, url, price, date " +
+                "FROM `MUSIC_MARKET`.`SONG` " +
+                "WHERE trackname=:trackname")
+                .bind("trackname", name)
+                .map(new SongMapper())
+                .list();
+
+        h.close();
+
+        return songs;
+    }
+
 }

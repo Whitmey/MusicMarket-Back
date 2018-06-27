@@ -19,5 +19,7 @@ public class SongAdapter {
 
         get("songs", (request, response) -> service.getSongs(request, response), gson::toJson);
 
+        get("song/:name", (request, response) -> service.getSongByName(request, response), gson::toJson);
+
     }
 }

@@ -54,4 +54,5 @@ public class SongParser {
     public Integer calculatePrice(Integer position, Integer streams) {
         return 10000 / position;
     }
+
 }

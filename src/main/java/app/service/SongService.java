@@ -26,20 +26,22 @@ public class SongService {
     }
 
     public String updateSongs(Request request, Response response) throws IOException {
-        String userId = tokenAuthentication.getUserId(request);
-
         SongParser songParser = new SongParser();
         repository.updateSongs(songParser.fetchSongs());
         return "";
     }
 
     public List<Song> getSongs(Request request, Response response) throws IOException {
-        String userId = tokenAuthentication.getUserId(request);
-
         Date date = new Date();
         String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
         return repository.getSongs(currentDate);
+    }
+
+    public List<Song> getSongByName(Request request, Response response) throws IOException {
+        String name = request.params("name");
+
+        return repository.getSongByName(name);
     }
 
 }
