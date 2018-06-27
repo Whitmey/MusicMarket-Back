@@ -21,8 +21,5 @@ public class UserAdapter {
 
         get("account", (request, response) -> service.getUserAccount(request, response), gson::toJson);
 
-        //new adapter
-        get("songs", (request, response) -> service.fetchSongs(request, response), gson::toJson);
-
     }
 }

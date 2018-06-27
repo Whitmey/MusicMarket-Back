@@ -1,5 +1,6 @@
 package app;
 
+import app.adapter.SongAdapter;
 import app.adapter.UserAdapter;
 import com.google.gson.Gson;
 
@@ -15,5 +16,6 @@ public class Application {
 
         Gson gson = new Gson();
         UserAdapter.configureRoutes(gson);
+        SongAdapter.configureRoutes(gson);
     }
 }

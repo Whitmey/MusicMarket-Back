@@ -2,11 +2,42 @@ package app.model;
 
 public class Song {
 
+    private String id;
     private Integer position;
     private String trackName;
     private String artist;
     private Integer streams;
     private String url;
+
+    public Song(String id, Integer position, String trackName, String artist, Integer streams, String url, String date) {
+        this.id = id;
+        this.position = position;
+        this.trackName = trackName;
+        this.artist = artist;
+        this.streams = streams;
+        this.url = url;
+        this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Song() {}
+
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getUrl() {
         return url;

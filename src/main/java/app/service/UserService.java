@@ -1,17 +1,11 @@
 package app.service;
 
-import app.model.Song;
 import app.model.User;
 import app.repository.UserRepository;
-import app.schedule.SongParser;
 import app.util.TokenAuthentication;
 import com.google.gson.Gson;
-import io.jsonwebtoken.Jwts;
 import spark.Request;
 import spark.Response;
-
-import java.io.IOException;
-import java.util.List;
 
 public class UserService {
 
@@ -46,12 +40,6 @@ public class UserService {
     public User getUserAccount(Request request, Response response) {
         String userId = tokenAuthentication.getUserId(request);
         return repository.findById(userId);
-    }
-
-    public List<Song> fetchSongs(Request request, Response response) throws IOException {
-        String userId = tokenAuthentication.getUserId(request);
-        SongParser songParser = new SongParser();
-        return songParser.fetchSongs();
     }
 
 }
