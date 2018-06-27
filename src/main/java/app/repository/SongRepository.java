@@ -13,11 +13,11 @@ public class SongRepository {
 
     public SongRepository() {}
 
-    public void updateSongs(List<Song> songs, String date) {
+    public void updateSongs(List<Song> songs) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        PreparedBatch batch = h.prepareBatch("INSERT INTO `MUSIC_MARKET`.`SONG`(id, position, trackname, artist, streams, url, date) VALUES(:id, :position, :trackname, :artist, :streams, :url, :date)");
+        PreparedBatch batch = h.prepareBatch("INSERT INTO `MUSIC_MARKET`.`SONG`(id, position, trackname, artist, streams, url, price, date) VALUES(:id, :position, :trackname, :artist, :streams, :url, :price, :date)");
         for (int i = 0; i < songs.size(); i++) {
             batch
                     .bind("id", UUID.randomUUID().toString()) //random uuid
@@ -26,7 +26,8 @@ public class SongRepository {
                     .bind("artist", songs.get(i).getArtist())
                     .bind("streams", songs.get(i).getStreams())
                     .bind("url", songs.get(i).getUrl())
-                    .bind("date", date)
+                    .bind("price", songs.get(i).getPrice())
+                    .bind("date", songs.get(i).getDate())
                     .add();
         }
 
@@ -37,7 +38,7 @@ public class SongRepository {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        List<Song> songs = h.createQuery("SELECT id, position, trackname, artist, streams, url, date " +
+        List<Song> songs = h.createQuery("SELECT id, position, trackname, artist, streams, url, price, date " +
                 "FROM `MUSIC_MARKET`.`SONG` " +
                 "WHERE date=:date " +
                 "ORDER BY position ASC")

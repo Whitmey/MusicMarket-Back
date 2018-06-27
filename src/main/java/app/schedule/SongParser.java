@@ -8,7 +8,9 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SongParser {
@@ -27,6 +29,9 @@ public class SongParser {
         //initialize the CSVParser object
         CSVParser parser = new CSVParser(reader, format);
 
+        Date date = new Date();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+
         //Position,"Track Name",Artist,Streams,URL
         List<Song> songs = new ArrayList<>();
         for(CSVRecord record : parser){
@@ -36,11 +41,17 @@ public class SongParser {
             song.setArtist(record.get("Artist"));
             song.setStreams(Integer.parseInt(record.get("Streams")));
             song.setUrl(record.get("URL"));
+            song.setPrice(calculatePrice(Integer.parseInt(record.get("Position")), Integer.parseInt(record.get("Streams"))));
+            song.setDate(currentDate);
             songs.add(song);
         }
         //close the parser
         parser.close();
 
         return songs;
+    }
+
+    public Integer calculatePrice(Integer position, Integer streams) {
+        return 10000 / position;
     }
 }

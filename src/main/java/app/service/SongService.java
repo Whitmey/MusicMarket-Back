@@ -28,11 +28,8 @@ public class SongService {
     public String updateSongs(Request request, Response response) throws IOException {
         String userId = tokenAuthentication.getUserId(request);
 
-        Date date = new Date();
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-
         SongParser songParser = new SongParser();
-        repository.updateSongs(songParser.fetchSongs(), currentDate);
+        repository.updateSongs(songParser.fetchSongs());
         return "";
     }
 

@@ -15,7 +15,6 @@ public class SongAdapter {
 
     public static void configureRoutes(Gson gson) {
 
-        //new adapter
         post("updateSongs", (request, response) -> service.updateSongs(request, response));
 
         get("songs", (request, response) -> service.getSongs(request, response), gson::toJson);

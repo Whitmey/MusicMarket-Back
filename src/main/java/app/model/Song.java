@@ -8,15 +8,26 @@ public class Song {
     private String artist;
     private Integer streams;
     private String url;
+    private Integer price;
+    private String date;
 
-    public Song(String id, Integer position, String trackName, String artist, Integer streams, String url, String date) {
+    public Song(String id, Integer position, String trackName, String artist, Integer streams, String url, Integer price, String date) {
         this.id = id;
         this.position = position;
         this.trackName = trackName;
         this.artist = artist;
         this.streams = streams;
         this.url = url;
+        this.price = price;
         this.date = date;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public String getId() {
@@ -28,8 +39,6 @@ public class Song {
     }
 
     public Song() {}
-
-    private String date;
 
     public String getDate() {
         return date;
