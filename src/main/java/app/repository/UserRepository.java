@@ -22,10 +22,11 @@ public class UserRepository {
         String uniqueID = UUID.randomUUID().toString();
         user.setId(uniqueID);
 
-        h.execute("INSERT INTO `MUSIC_MARKET`.`USER` (`id`, `username`, `password`) VALUES (?, ?, ?)",
+        h.execute("INSERT INTO `MUSIC_MARKET`.`USER` (`id`, `username`, `password`, `balance`) VALUES (?, ?, ?, ?)",
                 user.getId(),
                 user.getUsername(),
-                user.getPassword());
+                user.getPassword(),
+                user.getBalance());
 
         h.close();
 

@@ -8,6 +8,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,8 +52,8 @@ public class SongParser {
         return songs;
     }
 
-    public Integer calculatePrice(Integer position, Integer streams) {
-        return 10000 / position;
+    public BigDecimal calculatePrice(Integer position, Integer streams) {
+        return new BigDecimal(10000).divide(new BigDecimal(position));
     }
 
 }

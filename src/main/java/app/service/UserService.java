@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 
+import java.math.BigDecimal;
+
 public class UserService {
 
     private UserRepository repository;
@@ -21,6 +23,7 @@ public class UserService {
 
     public User registerUser(Request request, Response response) {
         User user = gson.fromJson(request.body(), User.class);
+        user.setBalance(new BigDecimal(1000));
         return repository.createUser(user);
     }
 
@@ -39,6 +42,7 @@ public class UserService {
 
     public User getUserAccount(Request request, Response response) {
         String userId = tokenAuthentication.getUserId(request);
+        // get all owned songs
         return repository.findById(userId);
     }
 

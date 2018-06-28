@@ -1,5 +1,7 @@
 package app.model;
 
+import java.math.BigDecimal;
+
 public class Song {
 
     private String id;
@@ -8,10 +10,10 @@ public class Song {
     private String artist;
     private Integer streams;
     private String url;
-    private Integer price;
+    private BigDecimal price;
     private String date;
 
-    public Song(String id, Integer position, String trackName, String artist, Integer streams, String url, Integer price, String date) {
+    public Song(String id, Integer position, String trackName, String artist, Integer streams, String url, BigDecimal price, String date) {
         this.id = id;
         this.position = position;
         this.trackName = trackName;
@@ -22,11 +24,11 @@ public class Song {
         this.date = date;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

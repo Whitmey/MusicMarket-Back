@@ -1,6 +1,7 @@
 package app.repository;
 
 import app.model.Song;
+import app.model.User;
 import app.repository.mapper.SongMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
@@ -51,7 +52,7 @@ public class SongRepository {
         return songs;
     }
 
-    public List<Song> getSongByName(String name) {
+    public List<Song> getSongByName(String name) { // and artist to be sure
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
