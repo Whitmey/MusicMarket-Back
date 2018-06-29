@@ -46,6 +46,9 @@ public class TradeService {
             repository.logTrade(userId, shareId, trade, song);
             repository.updateUserBalance(userId, newBalance);
         }
+        else {
+            return "Insufficient balance";
+        }
 
         return "Success, shares purchased";
     }
