@@ -103,13 +103,13 @@ public class TradeRepository {
         h.close();
     }
 
-    public void buyAdditionalShares(String userId, Song song, Integer quantity) {
+    public void updateShareOwnership(String userId, Song song, Integer quantity) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
         h.execute("UPDATE `MUSIC_MARKET`.`SHARE`\n" +
                         "SET quantity=?\n" +
-                        "WHERE userId=? AND track_name=? AND artist=?;",
+                        "WHERE user_id=? AND track_name=? AND artist=?;",
                 quantity,
                 userId,
                 song.getTrackName(),

@@ -5,16 +5,16 @@ import java.math.BigDecimal;
 public class Trade {
 
     private String tradeId;
-    private String userId;
+    private String shareId;
     private String trackName;
     private String artist;
     private BigDecimal price;
     private Integer quantity;
     private Long dateTime;
 
-    public Trade(String tradeId, String userId, String trackName, String artist, BigDecimal price, Integer quantity, Long dateTime) {
+    public Trade(String tradeId, String shareId, String trackName, String artist, BigDecimal price, Integer quantity, Long dateTime) {
         this.tradeId = tradeId;
-        this.userId = userId;
+        this.shareId = shareId;
         this.trackName = trackName;
         this.artist = artist;
         this.price = price;
@@ -30,12 +30,12 @@ public class Trade {
         this.tradeId = tradeId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getShareId() {
+        return shareId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setShareId(String userId) {
+        this.shareId = shareId;
     }
 
     public String getTrackName() {

@@ -2,33 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d931a18a-314b-45d3-b4b8-4da25951d27a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/adapter/TradeAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/Share.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/model/Trade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/repository/TradeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/repository/mapper/ShareMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/repository/mapper/TradeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/service/TradeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/model/Song.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/model/Song.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/repository/SongRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/repository/SongRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/repository/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/repository/mapper/SongMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/repository/mapper/SongMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/repository/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/repository/mapper/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/schedule/SongParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/schedule/SongParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/app/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/Song.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/SongRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/SongRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/mapper/SongMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/mapper/SongMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/schedule/SongParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/schedule/SongParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/schedule/Songs.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/schedule/Songs.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/Trade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/Trade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/TradeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/TradeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/TradeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/service/TradeService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -64,6 +40,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="UserAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/UserAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SongAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/SongAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="TradeMapper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/repository/mapper/TradeMapper.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -79,10 +79,11 @@
       <file leaf-file-name="TradeService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/service/TradeService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="54" column="61" lean-forward="true" selection-start-line="54" selection-start-column="61" selection-end-line="54" selection-end-column="61" />
+            <state relative-caret-position="198">
+              <caret line="100" column="88" lean-forward="true" selection-start-line="100" selection-start-column="64" selection-end-line="100" selection-end-column="92" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#3706#3707#0" expanded="true" />
+                <element signature="e#3801#3802#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,8 +104,8 @@
       <file leaf-file-name="TradeRepository.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/repository/TradeRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="90" column="31" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="31" />
+            <state relative-caret-position="278">
+              <caret line="105" column="16" selection-start-line="105" selection-start-column="16" selection-end-line="105" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -170,8 +171,8 @@
       <file leaf-file-name="Trade.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/model/Trade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="255">
+              <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -578,11 +579,11 @@
         <option value="$PROJECT_DIR$/src/main/java/app/adapter/TradeAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/service/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/repository/mapper/TradeMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/app/model/Trade.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/model/Share.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/repository/mapper/ShareMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/app/service/TradeService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/model/Trade.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/repository/TradeRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/service/TradeService.java" />
       </list>
     </option>
   </component>
@@ -818,7 +819,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="980" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="DB Execution Console" order="7" />
@@ -833,14 +833,14 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997735" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3997735" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info id="DB Browser" order="2" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.3295583" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3295583" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3295583" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3295583" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3295583" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21306472" />
@@ -923,11 +923,44 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="26" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/TradeService.java</url>
+          <line>100</line>
+          <properties />
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="28" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>allShares.get(i).getArtist()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allShares.get(i).getArtist() == artist</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allShares.get(i).getTrackName()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentOwnership.getQuantity()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentOwnership.getQuantity() &gt;= trade.getQuantity()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>songs.get(i).getPosition()</expression-string>
         <language-id>JAVA</language-id>
@@ -950,36 +983,6 @@
       </expression>
       <expression>
         <expression-string>foundUser</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>foundUser.getId()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>h.createQuery(&quot;SELECT id, username FROM MUSIC_MARKET.USER WHERE USER.username=:username AND USER.password=:password&quot;)
-                .bind(&quot;username&quot;, user.getUsername())
-                .bind(&quot;password&quot;, user.getPassword())
-                .map(userMapper)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>h.createQuery(&quot;SELECT id FROM MUSIC_MARKET.USER WHERE username=:username AND password=:password&quot;)
-                .bind(&quot;username&quot;, user.getUsername())
-                .bind(&quot;password&quot;, user.getPassword())
-                .mapTo(User.class)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>h.createQuery(&quot;SELECT id FROM MUSIC_MARKET.USER WHERE username=:username AND password=:password&quot;)
-                .bind(&quot;username&quot;, user.getUsername())
-                .bind(&quot;password&quot;, user.getPassword())
-                .mapTo(User.class)
-                .first()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -1163,30 +1166,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/SongAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" selection-start-line="9" selection-end-line="23" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/Application.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/UserAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="62" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="62" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1284,23 +1267,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/model/Trade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/TradeAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="56" lean-forward="true" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/model/Share.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1360,10 +1326,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/UserAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/SongAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/model/Trade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/adapter/TradeAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="56" lean-forward="true" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/repository/TradeRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="90" column="31" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="31" />
+        <state relative-caret-position="278">
+          <caret line="105" column="16" selection-start-line="105" selection-start-column="16" selection-end-line="105" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1372,10 +1375,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/service/TradeService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="54" column="61" lean-forward="true" selection-start-line="54" selection-start-column="61" selection-end-line="54" selection-end-column="61" />
+        <state relative-caret-position="198">
+          <caret line="100" column="88" lean-forward="true" selection-start-line="100" selection-start-column="64" selection-end-line="100" selection-end-column="92" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3706#3707#0" expanded="true" />
+            <element signature="e#3801#3802#0" expanded="true" />
           </folding>
         </state>
       </provider>
