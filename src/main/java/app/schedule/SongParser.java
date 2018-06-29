@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +54,7 @@ public class SongParser {
     }
 
     public BigDecimal calculatePrice(Integer position, Integer streams) {
-        return new BigDecimal(10000).divide(new BigDecimal(position));
+        return new BigDecimal(10000).divide(new BigDecimal(position), 2, RoundingMode.HALF_UP);
     }
 
 }
