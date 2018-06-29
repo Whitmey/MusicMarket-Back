@@ -11,6 +11,8 @@ import spark.Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +37,10 @@ public class TradeService {
         Share currentOwnership = checkCurrentOwnership(userId, trade.getTrackName(), trade.getArtist());
         String shareId = currentOwnership.getShareId() != null ? currentOwnership.getShareId() : UUID.randomUUID().toString();
 
+        if (isSongAvailable(song) == false) {
+            return "Song is currently not available for purchase";
+        }
+
         if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
             if (currentOwnership.getQuantity() >= 0) {
                 Integer newQuantity = currentOwnership.getQuantity() + trade.getQuantity();
@@ -57,6 +63,10 @@ public class TradeService {
         String userId = tokenAuthentication.getUserId(request);
         Trade trade = gson.fromJson(request.body(), Trade.class);
         Song song = getLatestSongDetails(trade.getTrackName(), trade.getArtist());
+
+        if (isSongAvailable(song) == false) {
+            return "Song cannot be sold as it is no longer listed";
+        }
 
         Share currentOwnership = checkCurrentOwnership(userId, trade.getTrackName(), trade.getArtist());
 
@@ -108,9 +118,14 @@ public class TradeService {
         return new Share(null, "", "", "", -1);
     }
 
-    public boolean checkSongListing(String userId, String trackName, String artist) {
-        // check that song is currently available for purchase
-        return true;
+    public boolean isSongAvailable(Song song) {
+        Date date = new Date();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+
+        if (song.getDate().equals(currentDate)) {
+            return true;
+        }
+        return false;
     }
 
 }
