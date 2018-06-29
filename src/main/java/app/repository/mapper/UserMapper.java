@@ -15,7 +15,6 @@ public class UserMapper implements RowMapper<User> {
         String username = r.getString("USER.username");
         BigDecimal balance = r.getBigDecimal("USER.balance");
 
-
         return new User(id, username, balance);
     }
 

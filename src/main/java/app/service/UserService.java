@@ -1,5 +1,8 @@
 package app.service;
 
+import app.model.Portfolio;
+import app.model.Share;
+import app.model.Song;
 import app.model.User;
 import app.repository.UserRepository;
 import app.util.TokenAuthentication;
@@ -8,6 +11,7 @@ import spark.Request;
 import spark.Response;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class UserService {
 
@@ -42,8 +46,24 @@ public class UserService {
 
     public User getUserAccount(Request request, Response response) {
         String userId = tokenAuthentication.getUserId(request);
-        // get all owned songs
         return repository.findById(userId);
+    }
+
+    public Portfolio getUserPortfolio(Request request, Response response) {
+        String userId = tokenAuthentication.getUserId(request);
+        List<Share> shares = repository.findSharesByUserId(userId);
+
+        for(int i = 0; i < shares.size(); i++) {
+            Song song = getLatestSongDetails(shares.get(i).getTrackName(), shares.get(i).getArtist());
+            BigDecimal value = new BigDecimal(shares.get(i).getQuantity()).multiply(song.getPrice());
+            shares.get(i).setValue(value);
+        }
+
+        return new Portfolio(shares);
+    }
+
+    public Song getLatestSongDetails(String trackName, String artist) { // duplicated from tradeService, should be in song service
+        return repository.getLatestSongByName(trackName);
     }
 
 }

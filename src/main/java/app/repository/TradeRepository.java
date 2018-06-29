@@ -3,7 +3,6 @@ package app.repository;
 import app.model.Share;
 import app.model.Song;
 import app.model.Trade;
-import app.model.User;
 import app.repository.mapper.ShareMapper;
 import app.repository.mapper.SongMapper;
 import app.repository.mapper.TradeMapper;
@@ -27,7 +26,7 @@ public class TradeRepository {
         Song query = h.createQuery("SELECT id, position, trackname, artist, streams, url, price, date " +
                 "FROM `MUSIC_MARKET`.`SONG` " +
                 "WHERE trackname=:trackname " +
-                "ORDER BY date ASC " +
+                "ORDER BY date DESC " +
                 "LIMIT 1")
                 .bind("trackname", name)
                 .map(new SongMapper()).findOnly();
