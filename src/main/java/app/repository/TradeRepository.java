@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TradeRepository {
@@ -23,24 +24,28 @@ public class TradeRepository {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        Song query = h.createQuery("SELECT id, position, trackname, artist, streams, url, price, date " +
+        Optional<Song> query = h.createQuery("SELECT id, position, trackname, artist, streams, url, price, date " +
                 "FROM `MUSIC_MARKET`.`SONG` " +
                 "WHERE trackname=:trackname " +
                 "ORDER BY date DESC " +
                 "LIMIT 1")
                 .bind("trackname", name)
-                .map(new SongMapper()).findOnly();
+                .map(new SongMapper()).findFirst();
 
         h.close();
 
-        return query;
+        if (query.isPresent()) {
+            return query.get();
+        }
+
+        return new Song();
     }
 
     public BigDecimal findUserBalanceById(String userId) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        BigDecimal query = h.createQuery("SELECT balance FROM `MUSIC_MARKET`.`USER` WHERE id=:id")
+        BigDecimal query = h.createQuery("SELECT balance FROM `MUSIC_MARKET`.`USER` WHERE user_id=:id")
                 .bind("id", userId)
                 .mapTo(BigDecimal.class)
                 .findOnly();
@@ -50,50 +55,36 @@ public class TradeRepository {
         return query;
     }
 
-    public List<Trade> findUserTradesByTrackName(String userId, String trackName, String artist) {
-        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
-        Handle h = jdbi.open();
-
-        List<Trade> trades = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`TRADE` WHERE id=:id AND track_name=:trackName AND artist=:artist")
-                .bind("id", userId)
-                .bind("trackName", trackName)
-                .bind("artist", artist)
-                .map(new TradeMapper())
-                .list();
-
-        h.close();
-
-        return trades;
-    }
-
-    public void logTrade(String userId, String shareId, Trade trade, Song song) {
+    public void logTrade(String userId, String shareId, Trade trade, Song song, String type) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
         String dateTime = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         String uniqueID = UUID.randomUUID().toString();
 
-        h.execute("INSERT INTO `MUSIC_MARKET`.`TRADE` (`trade_id`, `share_id`, `track_name`, `artist`, `price`, `quantity`, `date_time`) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        h.execute("INSERT INTO `MUSIC_MARKET`.`TRADE_LOG` (`trade_log_id`, `user_id`, `share_lot_id`, `track_name`, `artist`, `price`, `quantity`, `type`, `date_time`) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 uniqueID,
+                userId,
                 shareId,
                 song.getTrackName(),
                 song.getArtist(),
                 song.getPrice(),
-                trade.getQuantity(), // only this from Trade trade
+                trade.getQuantity(),
+                type,
                 dateTime);
 
         h.close();
     }
 
-    public void buyShares(String userId, String shareId, Trade trade, Song song) {
+    public void buyShares(String userId, String shareLotId, Trade trade, Song song) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        h.execute("INSERT INTO `MUSIC_MARKET`.`SHARE` " +
-                        "(`share_id`, `user_id`, `track_name`, `artist`, `quantity`) " +
+        h.execute("INSERT INTO `MUSIC_MARKET`.`SHARE_LOT` " +
+                        "(`share_lot_id`, `user_id`, `track_name`, `artist`, `quantity`) " +
                         "VALUES (?, ?, ?, ?, ?)",
-                shareId,
+                shareLotId,
                 userId,
                 song.getTrackName(),
                 song.getArtist(),
@@ -102,17 +93,15 @@ public class TradeRepository {
         h.close();
     }
 
-    public void updateShareOwnership(String userId, Song song, Integer quantity) {
+    public void updateShareLot(String shareLotId, Integer quantity) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        h.execute("UPDATE `MUSIC_MARKET`.`SHARE`\n" +
+        h.execute("UPDATE `MUSIC_MARKET`.`SHARE_LOT`\n" +
                         "SET quantity=?\n" +
-                        "WHERE user_id=? AND track_name=? AND artist=?;",
+                        "WHERE share_lot_id=?",
                 quantity,
-                userId,
-                song.getTrackName(),
-                song.getArtist());
+                shareLotId);
 
         h.close();
     }
@@ -123,27 +112,24 @@ public class TradeRepository {
 
         h.execute("UPDATE `MUSIC_MARKET`.`USER`\n" +
                 "SET balance=?\n" +
-                "WHERE id=?",
+                "WHERE user_id=?",
                 newBalance,
                 userId);
 
         h.close();
     }
 
-    public List<Share> findSharesByUserId(String userId, String trackName, String artist) {
+    public Share findShareLotById(String shareLotId) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        List<Share> shares = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE` WHERE user_id=:user_id AND track_name=:trackName AND artist=:artist")
-                .bind("user_id", userId)
-                .bind("trackName", trackName)
-                .bind("artist", artist)
-                .map(new ShareMapper())
-                .list();
+        Share share = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE_LOT` WHERE share_lot_id=:share_lot_id")
+                .bind("share_lot_id", shareLotId)
+                .map(new ShareMapper()).findOnly();
 
         h.close();
 
-        return shares;
+        return share;
     }
 
 }

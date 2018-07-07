@@ -12,11 +12,11 @@ import java.sql.SQLException;
 public class ShareMapper implements RowMapper<Share> {
 
     public Share map(ResultSet r, StatementContext ctx) throws SQLException {
-        String shareId = r.getString("SHARE.share_id");
-        String userId = r.getString("SHARE.user_id");
-        String trackName = r.getString("SHARE.track_name");
-        String artist = r.getString("SHARE.artist");
-        Integer quantity = r.getInt("SHARE.quantity");
+        String shareId = r.getString("SHARE_LOT.share_lot_id");
+        String userId = r.getString("SHARE_LOT.user_id");
+        String trackName = r.getString("SHARE_LOT.track_name");
+        String artist = r.getString("SHARE_LOT.artist");
+        Integer quantity = r.getInt("SHARE_LOT.quantity");
 
         return new Share(shareId, userId, trackName, artist, quantity);
     }

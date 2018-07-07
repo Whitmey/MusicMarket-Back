@@ -17,16 +17,9 @@ public class Share {
     private String artist;
     private Integer quantity;
     private BigDecimal value;
+    private BigDecimal profitLoss;
 
     public Share(String shareId, String userId, String trackName, String artist, Integer quantity) {
-        this.shareId = shareId;
-        this.userId = userId;
-        this.trackName = trackName;
-        this.artist = artist;
-        this.quantity = quantity;
-    }
-
-    public Share(String shareId, String userId, String trackName, String artist, Integer quantity, BigDecimal value) {
         this.shareId = shareId;
         this.userId = userId;
         this.trackName = trackName;

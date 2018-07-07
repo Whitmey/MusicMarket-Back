@@ -10,6 +10,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class UserRepository {
@@ -27,7 +28,7 @@ public class UserRepository {
         String uniqueID = UUID.randomUUID().toString();
         user.setId(uniqueID);
 
-        h.execute("INSERT INTO `MUSIC_MARKET`.`USER` (`id`, `username`, `password`, `balance`) VALUES (?, ?, ?, ?)",
+        h.execute("INSERT INTO `MUSIC_MARKET`.`USER` (`user_id`, `username`, `password`, `balance`) VALUES (?, ?, ?, ?)",
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
@@ -42,22 +43,39 @@ public class UserRepository {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        String query = h.createQuery("SELECT id FROM `MUSIC_MARKET`.`USER` WHERE username=:username AND password=:password")
+        Optional<String> query = h.createQuery("SELECT user_id FROM `MUSIC_MARKET`.`USER` WHERE username=:username AND password=:password")
                 .bind("username", user.getUsername())
                 .bind("password", user.getPassword())
-                .mapTo(String.class).findOnly();
+                .mapTo(String.class).findFirst();
 
         h.close();
 
-        return query;
+        if (query.isPresent()) {
+            return query.get();
+        }
+
+        return "User does not exist";
     }
 
     public User findById(String userId) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        User query = h.createQuery("SELECT id, username, balance FROM `MUSIC_MARKET`.`USER` WHERE id=:id")
+        User query = h.createQuery("SELECT user_id, username, balance FROM `MUSIC_MARKET`.`USER` WHERE user_id=:id")
                 .bind("id", userId)
+                .map(userMapper).findOnly();
+
+        h.close();
+
+        return query;
+    }
+
+    public User findUserByUsername(User user) {
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
+
+        User query = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`USER` WHERE username=:username")
+                .bind("username", user.getUsername())
                 .map(userMapper).findOnly();
 
         h.close();
@@ -69,7 +87,7 @@ public class UserRepository {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        List<Share> shares = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE` WHERE user_id=:user_id")
+        List<Share> shares = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE_LOT` WHERE user_id=:user_id")
                 .bind("user_id", userId)
                 .map(new ShareMapper())
                 .list();

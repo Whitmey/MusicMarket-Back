@@ -25,10 +25,14 @@ public class UserService {
         gson = new Gson();
     }
 
-    public User registerUser(Request request, Response response) {
+    public String registerUser(Request request, Response response) {
         User user = gson.fromJson(request.body(), User.class);
-        user.setBalance(new BigDecimal(1000));
-        return repository.createUser(user);
+//        if (checkUserNameIsAvailable(user) == false) {
+//            return "Error, user already exists with that username";
+//        }
+        user.setBalance(new BigDecimal(10000));
+        repository.createUser(user);
+        return "User created";
     }
 
     public String loginUser(Request request, Response response) {
@@ -52,18 +56,34 @@ public class UserService {
     public Portfolio getUserPortfolio(Request request, Response response) {
         String userId = tokenAuthentication.getUserId(request);
         List<Share> shares = repository.findSharesByUserId(userId);
+        BigDecimal portfolioValue = BigDecimal.ZERO;
+        BigDecimal totalProfitLoss = BigDecimal.ZERO;
 
         for(int i = 0; i < shares.size(); i++) {
             Song song = getLatestSongDetails(shares.get(i).getTrackName(), shares.get(i).getArtist());
-            BigDecimal value = new BigDecimal(shares.get(i).getQuantity()).multiply(song.getPrice());
-            shares.get(i).setValue(value);
+            BigDecimal currentValue = new BigDecimal(shares.get(i).getQuantity()).multiply(song.getPrice());
+//            quantity of shares at start
+//            BigDecimal purchaseValue =
+//            shares.get(i).setValue(currentValue);
+            portfolioValue = portfolioValue.add(currentValue);
         }
 
-        return new Portfolio(shares);
+        // profit is difference between value bought at and current value
+
+        return new Portfolio(shares, portfolioValue, totalProfitLoss);
     }
 
     public Song getLatestSongDetails(String trackName, String artist) { // duplicated from tradeService, should be in song service
         return repository.getLatestSongByName(trackName);
+    }
+
+    public Boolean checkUserNameIsAvailable(User user) {
+        Boolean userNameNotAllowed = false; // Implement userName filtering here
+        // Need to get all users then filter by username about to be generated
+        if (repository.findUserByUsername(user).getId() != null || userNameNotAllowed == true) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -13,12 +13,14 @@ import java.util.List;
 public class Portfolio {
 
     private List<Share> shares;
-//    private BigDecimal totalValue;
-//    private BigDecimal totalProfitOrLoss;
+    private BigDecimal totalPortfolioValue;
+    private BigDecimal totalProfitOrLoss;
 
 
-    public Portfolio(List<Share> shares) {
+    public Portfolio(List<Share> shares, BigDecimal totalPortfolioValue, BigDecimal totalProfitOrLoss) {
         this.shares = shares;
+        this.totalPortfolioValue = totalPortfolioValue;
+        this.totalProfitOrLoss = totalProfitOrLoss;
     }
 
 }

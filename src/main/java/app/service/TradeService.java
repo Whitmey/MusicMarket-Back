@@ -34,22 +34,15 @@ public class TradeService {
         Song song = getLatestSongDetails(trade.getTrackName(), trade.getArtist());
 
         BigDecimal newBalance = getDecreasedBalance(userId, trade, song);
-        Share currentOwnership = checkCurrentOwnership(userId, trade.getTrackName(), trade.getArtist());
-        String shareId = currentOwnership.getShareId() != null ? currentOwnership.getShareId() : UUID.randomUUID().toString();
+        String newShareLotId = UUID.randomUUID().toString();
 
         if (isSongAvailable(song) == false) {
             return "Song is currently not available for purchase";
         }
 
         if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
-            if (currentOwnership.getQuantity() >= 0) {
-                Integer newQuantity = currentOwnership.getQuantity() + trade.getQuantity();
-                repository.updateShareOwnership(userId, song, newQuantity);
-            }
-            else {
-                repository.buyShares(userId, shareId, trade, song);
-            }
-            repository.logTrade(userId, shareId, trade, song);
+            repository.buyShares(userId, newShareLotId, trade, song);
+            repository.logTrade(userId, newShareLotId, trade, song, "BUY");
             repository.updateUserBalance(userId, newBalance);
         }
         else {
@@ -62,20 +55,19 @@ public class TradeService {
     public String sellSong(Request request, Response response) throws IOException {
         String userId = tokenAuthentication.getUserId(request);
         Trade trade = gson.fromJson(request.body(), Trade.class);
+
+        Share shareLotToSell = getShareLotById(trade.getShareId());
         Song song = getLatestSongDetails(trade.getTrackName(), trade.getArtist());
 
         if (isSongAvailable(song) == false) {
-            return "Song cannot be sold as it is no longer listed";
+            return "Song cannot be sold as it is no longer listed, try selling again if it returns to the top 200";
         }
 
-        Share currentOwnership = checkCurrentOwnership(userId, trade.getTrackName(), trade.getArtist());
-
-        if (currentOwnership.getQuantity() >= trade.getQuantity()) {
-            Integer newQuantity = currentOwnership.getQuantity() - trade.getQuantity();
-            String shareId = currentOwnership.getShareId();
-            repository.updateShareOwnership(userId, song, newQuantity);
+        if (shareLotToSell.getQuantity() >= trade.getQuantity()) {
+            Integer newQuantity = shareLotToSell.getQuantity() - trade.getQuantity();
+            repository.updateShareLot(shareLotToSell.getShareId(), newQuantity);
             BigDecimal newBalance = getIncreasedBalance(userId, trade, song);
-            repository.logTrade(userId, shareId, trade, song);
+            repository.logTrade(userId, trade.getShareId(), trade, song, "SELL");
             repository.updateUserBalance(userId, newBalance);
         }
         else {
@@ -107,15 +99,8 @@ public class TradeService {
         return balance.add(purchaseAmount);
     }
 
-    public Share checkCurrentOwnership(String userId, String trackName, String artist) {
-        List<Share> allShares = repository.findSharesByUserId(userId, trackName, artist);
-
-        for (int i=0; i < allShares.size(); i++) {
-            if (allShares.get(i).getTrackName().equals(trackName) && allShares.get(i).getArtist().equals(artist)) {
-                return allShares.get(i);
-            }
-        }
-        return new Share(null, "", "", "", -1);
+    public Share getShareLotById(String shareLotId) {
+        return repository.findShareLotById(shareLotId);
     }
 
     public boolean isSongAvailable(Song song) {
