@@ -2,9 +2,11 @@ package app.repository;
 
 import app.model.Share;
 import app.model.Song;
+import app.model.Trade;
 import app.model.User;
 import app.repository.mapper.ShareMapper;
 import app.repository.mapper.SongMapper;
+import app.repository.mapper.TradeMapper;
 import app.repository.mapper.UserMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
@@ -108,6 +110,23 @@ public class UserRepository {
                 "LIMIT 1")
                 .bind("trackname", name)
                 .map(new SongMapper()).findOnly();
+
+        h.close();
+
+        return query;
+    }
+
+    public Trade findFirstTradeLog(String shareLotId) { // and artist to be sure, use star more often to get everything?
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
+
+        Trade query = h.createQuery("SELECT * " +
+                "FROM `MUSIC_MARKET`.`TRADE_LOG` " +
+                "WHERE share_lot_id=:share_lot_id " +
+                "ORDER BY date_time DESC " +
+                "LIMIT 1")
+                .bind("share_lot_id", shareLotId)
+                .map(new TradeMapper()).findOnly();
 
         h.close();
 

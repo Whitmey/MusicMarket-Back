@@ -56,7 +56,7 @@ public class TradeService {
         String userId = tokenAuthentication.getUserId(request);
         Trade trade = gson.fromJson(request.body(), Trade.class);
 
-        Share shareLotToSell = getShareLotById(trade.getShareId());
+        Share shareLotToSell = getShareLotById(trade.getShareLotId());
         Song song = getLatestSongDetails(trade.getTrackName(), trade.getArtist());
 
         if (isSongAvailable(song) == false) {
@@ -67,7 +67,7 @@ public class TradeService {
             Integer newQuantity = shareLotToSell.getQuantity() - trade.getQuantity();
             repository.updateShareLot(shareLotToSell.getShareId(), newQuantity);
             BigDecimal newBalance = getIncreasedBalance(userId, trade, song);
-            repository.logTrade(userId, trade.getShareId(), trade, song, "SELL");
+            repository.logTrade(userId, trade.getShareLotId(), trade, song, "SELL");
             repository.updateUserBalance(userId, newBalance);
         }
         else {

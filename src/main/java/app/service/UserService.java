@@ -1,9 +1,6 @@
 package app.service;
 
-import app.model.Portfolio;
-import app.model.Share;
-import app.model.Song;
-import app.model.User;
+import app.model.*;
 import app.repository.UserRepository;
 import app.util.TokenAuthentication;
 import com.google.gson.Gson;
@@ -55,20 +52,22 @@ public class UserService {
 
     public Portfolio getUserPortfolio(Request request, Response response) {
         String userId = tokenAuthentication.getUserId(request);
+        User user = repository.findById(userId);
         List<Share> shares = repository.findSharesByUserId(userId);
         BigDecimal portfolioValue = BigDecimal.ZERO;
-        BigDecimal totalProfitLoss = BigDecimal.ZERO;
 
         for(int i = 0; i < shares.size(); i++) {
             Song song = getLatestSongDetails(shares.get(i).getTrackName(), shares.get(i).getArtist());
             BigDecimal currentValue = new BigDecimal(shares.get(i).getQuantity()).multiply(song.getPrice());
-//            quantity of shares at start
-//            BigDecimal purchaseValue =
-//            shares.get(i).setValue(currentValue);
             portfolioValue = portfolioValue.add(currentValue);
+            Trade firstBuyTrade = repository.findFirstTradeLog(shares.get(i).getShareId());
+            shares.get(i).setProfitLoss(song.getPrice()
+                    .multiply(new BigDecimal(shares.get(i).getQuantity()))
+                    .subtract(firstBuyTrade.getPrice().multiply(new BigDecimal(shares.get(i).getQuantity()))));
+            // Profit = Current price * current quantity MINUS Buy price * current quantity
         }
 
-        // profit is difference between value bought at and current value
+        BigDecimal totalProfitLoss = user.getBalance().add(portfolioValue).subtract(BigDecimal.valueOf(10000));
 
         return new Portfolio(shares, portfolioValue, totalProfitLoss);
     }

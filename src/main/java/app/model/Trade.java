@@ -12,11 +12,13 @@ import java.math.BigDecimal;
 public class Trade {
 
     private String tradeId;
-    private String shareId;
+    private String userId;
+    private String shareLotId;
     private String trackName;
     private String artist;
+    private String type;
     private BigDecimal price;
     private Integer quantity;
-    private Long dateTime;
+    private String dateTime;
 
 }
