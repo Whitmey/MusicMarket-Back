@@ -2,6 +2,7 @@ package app.adapter;
 
 import app.service.UserService;
 import com.google.gson.Gson;
+import app.util.Filters;
 
 import static spark.Spark.*;
 
@@ -14,6 +15,8 @@ public class UserAdapter {
     }
 
     public static void configureRoutes(Gson gson) {
+
+        before("*", Filters.addCORSHeader);
 
         post("login", (request, response) -> service.loginUser(request, response), gson::toJson);
 

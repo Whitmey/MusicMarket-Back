@@ -1,9 +1,10 @@
 package app.adapter;
 
 import app.service.TradeService;
+import app.util.Filters;
 import com.google.gson.Gson;
 
-import static spark.Spark.get;
+import static spark.Spark.before;
 import static spark.Spark.post;
 
 public class TradeAdapter {

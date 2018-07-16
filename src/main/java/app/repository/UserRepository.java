@@ -56,7 +56,7 @@ public class UserRepository {
             return query.get();
         }
 
-        return "User does not exist";
+        return null;
     }
 
     public User findById(String userId) {

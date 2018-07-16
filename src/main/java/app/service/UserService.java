@@ -4,6 +4,8 @@ import app.model.*;
 import app.repository.UserRepository;
 import app.util.TokenAuthentication;
 import com.google.gson.Gson;
+import org.json.JSONException;
+import org.json.JSONObject;
 import spark.Request;
 import spark.Response;
 
@@ -32,17 +34,18 @@ public class UserService {
         return "User created";
     }
 
-    public String loginUser(Request request, Response response) {
+    public AuthKey loginUser(Request request, Response response) {
         String userId = repository.checkCredentials(gson.fromJson(request.body(), User.class));
+        AuthKey data = new AuthKey();
 
         if (userId != null) {
-            response.header("AuthKey", tokenAuthentication.generateToken(userId));
+            data.setAuthKey(tokenAuthentication.generateToken(userId));
         }
         else {
             response.status(401);
         }
 
-        return "";
+        return data;
     }
 
     public User getUserAccount(Request request, Response response) {
@@ -69,7 +72,7 @@ public class UserService {
 
         BigDecimal totalProfitLoss = user.getBalance().add(portfolioValue).subtract(BigDecimal.valueOf(10000));
 
-        return new Portfolio(shares, portfolioValue, totalProfitLoss);
+        return new Portfolio(userId, shares, portfolioValue, totalProfitLoss);
     }
 
     public Song getLatestSongDetails(String trackName, String artist) { // duplicated from tradeService, should be in song service

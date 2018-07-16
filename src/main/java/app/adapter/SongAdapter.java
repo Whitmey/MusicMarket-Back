@@ -1,6 +1,7 @@
 package app.adapter;
 
 import app.service.SongService;
+import app.util.Filters;
 import com.google.gson.Gson;
 
 import static spark.Spark.*;

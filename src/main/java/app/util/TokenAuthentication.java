@@ -5,6 +5,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import spark.Request;
 
 import javax.xml.bind.DatatypeConverter;
+import java.util.Date;
 
 public class TokenAuthentication {
 
@@ -23,6 +24,7 @@ public class TokenAuthentication {
     public String generateToken(String userId) {
         return Jwts.builder()
                 .setSubject(userId)
+//                .setExpiration(new Date(1563126384))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
