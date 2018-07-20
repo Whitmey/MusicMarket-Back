@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import static spark.Spark.before;
 import static spark.Spark.post;
+import static spark.Spark.get;
 
 public class TradeAdapter {
 
@@ -20,6 +21,8 @@ public class TradeAdapter {
         post("buy", (request, response) -> service.buySong(request, response), gson::toJson);
 
         post("sell", (request, response) -> service.sellSong(request, response), gson::toJson);
+
+        get("holding/:trackName/:artist", (request, response) -> service.getCurrentOwnership(request, response), gson::toJson);
 
     }
 

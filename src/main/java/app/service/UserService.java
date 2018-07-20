@@ -63,7 +63,7 @@ public class UserService {
             Song song = getLatestSongDetails(shares.get(i).getTrackName(), shares.get(i).getArtist());
             BigDecimal currentValue = new BigDecimal(shares.get(i).getQuantity()).multiply(song.getPrice());
             portfolioValue = portfolioValue.add(currentValue);
-            Trade firstBuyTrade = repository.findFirstTradeLog(shares.get(i).getShareId());
+            Trade firstBuyTrade = repository.findFirstTradeLog(shares.get(i).getId());
             shares.get(i).setProfitLoss(song.getPrice()
                     .multiply(new BigDecimal(shares.get(i).getQuantity()))
                     .subtract(firstBuyTrade.getPrice().multiply(new BigDecimal(shares.get(i).getQuantity()))));

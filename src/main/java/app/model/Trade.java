@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 public class Trade {
 
-    private String tradeId;
+    private String id;
     private String userId;
     private String shareLotId;
     private String trackName;

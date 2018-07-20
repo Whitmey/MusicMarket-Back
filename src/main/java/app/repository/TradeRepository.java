@@ -132,4 +132,23 @@ public class TradeRepository {
         return share;
     }
 
+    public List<Share> findShareLotsByNameAndUserId(String trackName, String artist, String userId) {
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
+
+        List<Share> shares = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE_LOT` " +
+                "WHERE user_id=:user_id " +
+                "AND track_name=:trackName " +
+                "AND artist=:artist")
+                .bind("user_id", userId)
+                .bind("trackName", trackName)
+                .bind("artist", artist)
+                .map(new ShareMapper())
+                .list();
+
+        h.close();
+
+        return shares;
+    }
+
 }

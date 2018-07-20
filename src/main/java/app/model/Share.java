@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 public class Share {
 
-    private String shareId;
+    private String id;
     private String userId;
     private String trackName;
     private String artist;
@@ -20,7 +20,7 @@ public class Share {
     private BigDecimal profitLoss;
 
     public Share(String shareId, String userId, String trackName, String artist, Integer quantity) {
-        this.shareId = shareId;
+        this.id = shareId;
         this.userId = userId;
         this.trackName = trackName;
         this.artist = artist;
