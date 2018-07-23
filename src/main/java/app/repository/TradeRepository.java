@@ -55,7 +55,7 @@ public class TradeRepository {
         return query;
     }
 
-    public void logTrade(String userId, String shareId, Trade trade, Song song, String type) {
+    public void logTrade(String userId, String shareId, Integer quantity, Song song, String type) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
@@ -70,7 +70,7 @@ public class TradeRepository {
                 song.getTrackName(),
                 song.getArtist(),
                 song.getPrice(),
-                trade.getQuantity(),
+                quantity,
                 type,
                 dateTime);
 
@@ -130,25 +130,6 @@ public class TradeRepository {
         h.close();
 
         return share;
-    }
-
-    public List<Share> findShareLotsByNameAndUserId(String trackName, String artist, String userId) {
-        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
-        Handle h = jdbi.open();
-
-        List<Share> shares = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE_LOT` " +
-                "WHERE user_id=:user_id " +
-                "AND track_name=:trackName " +
-                "AND artist=:artist")
-                .bind("user_id", userId)
-                .bind("trackName", trackName)
-                .bind("artist", artist)
-                .map(new ShareMapper())
-                .list();
-
-        h.close();
-
-        return shares;
     }
 
 }

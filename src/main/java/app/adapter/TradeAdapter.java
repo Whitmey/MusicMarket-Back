@@ -22,8 +22,6 @@ public class TradeAdapter {
 
         post("sell", (request, response) -> service.sellSong(request, response), gson::toJson);
 
-        get("holding/:trackName/:artist", (request, response) -> service.getCurrentOwnership(request, response), gson::toJson);
-
     }
 
 }

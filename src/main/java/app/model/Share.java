@@ -17,6 +17,7 @@ public class Share {
     private String artist;
     private Integer quantity;
     private BigDecimal value;
+    private BigDecimal currentPrice;
     private BigDecimal profitLoss;
 
     public Share(String shareId, String userId, String trackName, String artist, Integer quantity) {
