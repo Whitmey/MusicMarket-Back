@@ -9,7 +9,10 @@ import spark.Request;
 import spark.Response;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -32,10 +35,31 @@ public class SongService {
     }
 
     public List<Song> getSongs(Request request, Response response) throws IOException {
-        Date date = new Date();
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        Date currentDay = new Date();
+        Date previousDay = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(previousDay);
+        c.add(Calendar.DATE, -1);
+        previousDay = c.getTime();
 
-        return repository.getSongs(currentDate);
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(currentDay);
+        String previousDate = new SimpleDateFormat("yyyy-MM-dd").format(previousDay);
+
+
+        List<Song> songs = repository.getSongs(currentDate);
+        List<Song> previousDaySongs = repository.getSongs(previousDate);
+
+        for (Song song : songs) {
+            for (Song previousSong : previousDaySongs) {
+                if (song.getTrackName().equals(previousSong.getTrackName())) {
+                    BigDecimal change = song.getPrice().subtract(previousSong.getPrice());
+                    song.setChange(change);
+                    song.setChangeAsPercent(change.divide(previousSong.getPrice(), 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
+                }
+            }
+        }
+
+        return songs;
     }
 
     public List<Song> getSongByName(Request request, Response response) throws IOException {

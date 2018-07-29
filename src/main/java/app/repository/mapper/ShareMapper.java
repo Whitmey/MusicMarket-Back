@@ -17,7 +17,8 @@ public class ShareMapper implements RowMapper<Share> {
         String trackName = r.getString("SHARE_LOT.track_name");
         String artist = r.getString("SHARE_LOT.artist");
         Integer quantity = r.getInt("SHARE_LOT.quantity");
+        BigDecimal price = r.getBigDecimal("SHARE_LOT.price");
 
-        return new Share(shareId, userId, trackName, artist, quantity);
+        return new Share(shareId, userId, trackName, artist, quantity, price);
     }
 }

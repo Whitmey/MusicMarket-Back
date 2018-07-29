@@ -133,4 +133,17 @@ public class UserRepository {
         return query;
     }
 
+    public List<User> getAllUsers() {
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
+
+        List<User> query = h.createQuery("SELECT user_id, username, balance FROM `MUSIC_MARKET`.`USER`")
+                .map(userMapper)
+                .list();
+
+        h.close();
+
+        return query;
+    }
+
 }

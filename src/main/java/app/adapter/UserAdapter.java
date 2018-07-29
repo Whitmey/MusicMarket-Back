@@ -26,5 +26,7 @@ public class UserAdapter {
 
         get("portfolio", (request, response) -> service.getUserPortfolio(request, response), gson::toJson);
 
+        get("leaderboard", (request, response) -> service.getLeaderboard(request, response), gson::toJson);
+
     }
 }

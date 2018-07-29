@@ -15,6 +15,8 @@ public class User {
     private String username;
     private String password;
     private BigDecimal balance;
+    private BigDecimal profit;
+    private BigDecimal portfolioValue;
 
     public User(String id, String username, BigDecimal balance) {
         this.id = id;

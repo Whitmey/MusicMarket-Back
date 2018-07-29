@@ -77,18 +77,19 @@ public class TradeRepository {
         h.close();
     }
 
-    public void buyShares(String userId, String shareLotId, Trade trade, Song song) {
+    public void buyShares(String userId, String shareLotId, Trade trade, Song song) { // sql injection, use bind?
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
         h.execute("INSERT INTO `MUSIC_MARKET`.`SHARE_LOT` " +
-                        "(`share_lot_id`, `user_id`, `track_name`, `artist`, `quantity`) " +
-                        "VALUES (?, ?, ?, ?, ?)",
+                        "(`share_lot_id`, `user_id`, `track_name`, `artist`, `quantity`, `price`) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)",
                 shareLotId,
                 userId,
                 song.getTrackName(),
                 song.getArtist(),
-                trade.getQuantity());
+                trade.getQuantity(),
+                song.getPrice());
 
         h.close();
     }

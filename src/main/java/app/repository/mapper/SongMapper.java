@@ -20,7 +20,7 @@ public class SongMapper implements RowMapper<Song> {
         BigDecimal price = r.getBigDecimal("SONG.price");
         String date = r.getString("SONG.date");
 
-        return new Song(id, position, trackName, artist, streams, url, price, date);
+        return new Song(id, position, trackName, artist, streams, url, price, null, null, date);
     }
 
 }

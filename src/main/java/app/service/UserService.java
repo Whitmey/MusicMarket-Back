@@ -10,6 +10,7 @@ import spark.Request;
 import spark.Response;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class UserService {
@@ -63,10 +64,11 @@ public class UserService {
             Song song = getLatestSongDetails(shares.get(i).getTrackName(), shares.get(i).getArtist());
             BigDecimal currentValue = new BigDecimal(shares.get(i).getQuantity()).multiply(song.getPrice());
             portfolioValue = portfolioValue.add(currentValue);
-            Trade firstBuyTrade = repository.findFirstTradeLog(shares.get(i).getId());
+            shares.get(i).setCurrentPrice(song.getPrice()); // CATASTROPHIC PERFORMANCE ON GET i, use iterator instead
+            shares.get(i).setValue(song.getPrice().multiply(new BigDecimal(shares.get(i).getQuantity())));
             shares.get(i).setProfitLoss(song.getPrice()
                     .multiply(new BigDecimal(shares.get(i).getQuantity()))
-                    .subtract(firstBuyTrade.getPrice().multiply(new BigDecimal(shares.get(i).getQuantity()))));
+                    .subtract(shares.get(i).getPrice().multiply(new BigDecimal(shares.get(i).getQuantity()))));
             // Profit = Current price * current quantity MINUS Buy price * current quantity
         }
 
@@ -77,6 +79,24 @@ public class UserService {
 
     public Song getLatestSongDetails(String trackName, String artist) { // duplicated from tradeService, should be in song service
         return repository.getLatestSongByName(trackName);
+    }
+
+    public List<User> getLeaderboard(Request request, Response response) {
+        List<User> users = repository.getAllUsers();
+
+        for (User user : users) {
+            List<Share> shares = repository.findSharesByUserId(user.getId());
+            BigDecimal portfolioValue = BigDecimal.ZERO;
+            for (Share share : shares) {
+                Song song = getLatestSongDetails(share.getTrackName(), share.getArtist());
+                BigDecimal currentValue = new BigDecimal(share.getQuantity()).multiply(song.getPrice());
+                portfolioValue = portfolioValue.add(currentValue);
+            }
+            BigDecimal totalProfitLoss = user.getBalance().add(portfolioValue).subtract(BigDecimal.valueOf(10000));
+            user.setProfit(totalProfitLoss);
+            user.setPortfolioValue(portfolioValue);
+        }
+        return users;
     }
 
     public Boolean checkUserNameIsAvailable(User user) {
