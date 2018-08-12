@@ -19,6 +19,7 @@ public class Song {
     private String artist;
     private Integer streams;
     private String url;
+    private BigDecimal startPrice;
     private BigDecimal price;
     private BigDecimal change;
     private BigDecimal changeAsPercent;

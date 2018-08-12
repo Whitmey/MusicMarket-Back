@@ -88,7 +88,7 @@ public class UserService {
             List<Share> shares = repository.findSharesByUserId(user.getId());
             BigDecimal portfolioValue = BigDecimal.ZERO;
             for (Share share : shares) {
-                Song song = getLatestSongDetails(share.getTrackName(), share.getArtist());
+                Song song = getLatestSongDetails(share.getTrackName(), share.getArtist()); // get all songs earlier, then find in that
                 BigDecimal currentValue = new BigDecimal(share.getQuantity()).multiply(song.getPrice());
                 portfolioValue = portfolioValue.add(currentValue);
             }

@@ -36,26 +36,16 @@ public class SongService {
 
     public List<Song> getSongs(Request request, Response response) throws IOException {
         Date currentDay = new Date();
-        Date previousDay = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(previousDay);
-        c.add(Calendar.DATE, -1);
-        previousDay = c.getTime();
 
         String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(currentDay);
-        String previousDate = new SimpleDateFormat("yyyy-MM-dd").format(previousDay);
-
 
         List<Song> songs = repository.getSongs(currentDate);
-        List<Song> previousDaySongs = repository.getSongs(previousDate);
 
         for (Song song : songs) {
-            for (Song previousSong : previousDaySongs) {
-                if (song.getTrackName().equals(previousSong.getTrackName())) {
-                    BigDecimal change = song.getPrice().subtract(previousSong.getPrice());
-                    song.setChange(change);
-                    song.setChangeAsPercent(change.divide(previousSong.getPrice(), 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
-                }
+            BigDecimal change = song.getPrice().subtract(song.getStartPrice());
+            song.setChange(change);
+            if (song.getStartPrice().compareTo(BigDecimal.ZERO) > 0) {
+                song.setChangeAsPercent(change.divide(song.getStartPrice(), 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
             }
         }
 

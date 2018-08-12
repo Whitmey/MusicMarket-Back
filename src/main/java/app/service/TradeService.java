@@ -33,7 +33,9 @@ public class TradeService {
         Trade trade = gson.fromJson(request.body(), Trade.class);
         Song song = getLatestSongDetails(trade.getTrackName(), trade.getArtist());
 
-        BigDecimal newBalance = getDecreasedBalance(userId, trade, song);
+        BigDecimal newPrice = song.getPrice().add(calculatePriceChange(song.getPrice(), trade.getQuantity()));
+
+        BigDecimal newBalance = getDecreasedBalance(userId, trade, newPrice);
         String newShareLotId = UUID.randomUUID().toString();
 
         if (isSongAvailable(song) == false) {
@@ -42,8 +44,9 @@ public class TradeService {
         }
 
         if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
-            repository.buyShares(userId, newShareLotId, trade, song);
-            repository.logTrade(userId, newShareLotId, trade.getQuantity(), song, "BUY");
+            repository.buyShares(userId, newShareLotId, trade, song, newPrice);
+            repository.updateSongPrice(song, newPrice);
+            repository.logTrade(userId, newShareLotId, trade.getQuantity(), song, "BUY", newPrice);
             repository.updateUserBalance(userId, newBalance);
         }
         else {
@@ -63,14 +66,17 @@ public class TradeService {
 
         Song song = getLatestSongDetails(shareLotToSell.getTrackName(), shareLotToSell.getArtist());
 
+        BigDecimal newPrice = song.getPrice().subtract(calculatePriceChange(song.getPrice(), shareLotToSell.getQuantity()));
+
         if (isSongAvailable(song) == false) {
             return "Song cannot be sold as it is no longer listed, try selling again if it returns to the top 200";
         }
 
         if (shareLotToSell.getQuantity() > 0) {
             repository.updateShareLot(shareLotToSell.getId(), 0);
-            BigDecimal newBalance = getIncreasedBalance(userId, shareLotToSell, song);
-            repository.logTrade(userId, trade.getShareLotId(), shareLotToSell.getQuantity(), song, "SELL");
+            repository.updateSongPrice(song, newPrice);
+            BigDecimal newBalance = getIncreasedBalance(userId, shareLotToSell, newPrice);
+            repository.logTrade(userId, trade.getShareLotId(), shareLotToSell.getQuantity(), song, "SELL", newPrice);
             repository.updateUserBalance(userId, newBalance);
         }
         else {
@@ -88,16 +94,20 @@ public class TradeService {
         return repository.findUserBalanceById(userId);
     }
 
-    public BigDecimal getDecreasedBalance(String userId, Trade trade, Song song) {
+    public BigDecimal calculatePriceChange(BigDecimal price, Integer quantity) {
+        return price.divide(new BigDecimal(5000)).multiply(new BigDecimal(quantity));
+    }
+
+    public BigDecimal getDecreasedBalance(String userId, Trade trade, BigDecimal newPrice) {
         BigDecimal balance = getUserBalance(userId);
-        BigDecimal purchaseAmount = song.getPrice().multiply(new BigDecimal(trade.getQuantity()));
+        BigDecimal purchaseAmount = newPrice.multiply(new BigDecimal(trade.getQuantity()));
 
         return balance.subtract(purchaseAmount);
     }
 
-    public BigDecimal getIncreasedBalance(String userId, Share shareLotToSell, Song song) {
+    public BigDecimal getIncreasedBalance(String userId, Share shareLotToSell, BigDecimal newPrice) {
         BigDecimal balance = getUserBalance(userId);
-        BigDecimal sellAmount = song.getPrice().multiply(new BigDecimal(shareLotToSell.getQuantity()));
+        BigDecimal sellAmount = newPrice.multiply(new BigDecimal(shareLotToSell.getQuantity()));
 
         return balance.add(sellAmount);
     }

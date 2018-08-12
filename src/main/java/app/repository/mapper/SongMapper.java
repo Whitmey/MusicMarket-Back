@@ -17,10 +17,11 @@ public class SongMapper implements RowMapper<Song> {
         String artist = r.getString("SONG.artist");
         Integer streams = r.getInt("SONG.streams");
         String url = r.getString("SONG.url");
+        BigDecimal startPrice = r.getBigDecimal("SONG.start_price");
         BigDecimal price = r.getBigDecimal("SONG.price");
         String date = r.getString("SONG.date");
 
-        return new Song(id, position, trackName, artist, streams, url, price, null, null, date);
+        return new Song(id, position, trackName, artist, streams, url, startPrice, price, null, null, date);
     }
 
 }

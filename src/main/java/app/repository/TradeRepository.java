@@ -24,7 +24,7 @@ public class TradeRepository {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        Optional<Song> query = h.createQuery("SELECT id, position, trackname, artist, streams, url, price, date " +
+        Optional<Song> query = h.createQuery("SELECT * " +
                 "FROM `MUSIC_MARKET`.`SONG` " +
                 "WHERE trackname=:trackname " +
                 "ORDER BY date DESC " +
@@ -55,7 +55,7 @@ public class TradeRepository {
         return query;
     }
 
-    public void logTrade(String userId, String shareId, Integer quantity, Song song, String type) {
+    public void logTrade(String userId, String shareId, Integer quantity, Song song, String type, BigDecimal price) {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
@@ -69,7 +69,7 @@ public class TradeRepository {
                 shareId,
                 song.getTrackName(),
                 song.getArtist(),
-                song.getPrice(),
+                price,
                 quantity,
                 type,
                 dateTime);
@@ -77,7 +77,7 @@ public class TradeRepository {
         h.close();
     }
 
-    public void buyShares(String userId, String shareLotId, Trade trade, Song song) { // sql injection, use bind?
+    public void buyShares(String userId, String shareLotId, Trade trade, Song song, BigDecimal price) { // sql injection, use bind?
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
@@ -89,7 +89,7 @@ public class TradeRepository {
                 song.getTrackName(),
                 song.getArtist(),
                 trade.getQuantity(),
-                song.getPrice());
+                price);
 
         h.close();
     }
@@ -116,6 +116,22 @@ public class TradeRepository {
                 "WHERE user_id=?",
                 newBalance,
                 userId);
+
+        h.close();
+    }
+
+    public void updateSongPrice(Song song, BigDecimal newPrice) {
+        Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
+        Handle h = jdbi.open();
+
+        h.execute("INSERT INTO `MUSIC_MARKET`.`PRICE_LOG` " +
+                        "(`id`, `track_name`, `artist`, `price`, date_time) " +
+                        "VALUES (?, ?, ?, ?, ?)",
+                UUID.randomUUID().toString(),
+                song.getTrackName(),
+                song.getArtist(),
+                newPrice,
+                song.getId());
 
         h.close();
     }

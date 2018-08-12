@@ -89,7 +89,7 @@ public class UserRepository {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        List<Share> shares = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE_LOT` WHERE user_id=:user_id")
+        List<Share> shares = h.createQuery("SELECT * FROM `MUSIC_MARKET`.`SHARE_LOT` WHERE user_id=:user_id AND quantity > 0")
                 .bind("user_id", userId)
                 .map(new ShareMapper())
                 .list();
@@ -103,7 +103,7 @@ public class UserRepository {
         Jdbi jdbi = Jdbi.create("jdbc:mysql://127.0.0.1:3306/MUSIC_MARKET?user=root&relaxAutoCommit=true");
         Handle h = jdbi.open();
 
-        Song query = h.createQuery("SELECT id, position, trackname, artist, streams, url, price, date " +
+        Song query = h.createQuery("SELECT * " +
                 "FROM `MUSIC_MARKET`.`SONG` " +
                 "WHERE trackname=:trackname " +
                 "ORDER BY date DESC " +
